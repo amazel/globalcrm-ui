@@ -1,4 +1,6 @@
-# GlobalcrmUi
+[![npm version](https://badge.fury.io/js/%40angular%2Fcore.svg)](https://badge.fury.io/js/%40angular%2Fcore)
+
+# Global CRM UI
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.1.
 
