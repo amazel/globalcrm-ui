@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Configuration} from '../app.configuration';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs/internal/Observable';
+import {Observable} from 'rxjs';
 
 
 @Injectable()
@@ -24,7 +24,7 @@ export class ContactService {
     return this.http.get<T>(this.actionUrl, options);
   }
 
-  public getSingle<T>(id: string): Observable<T> {
+  public getSingle<T>(id: number): Observable<T> {
     console.log('Getting contact: ' + id);
     const options = {
       params: new HttpParams().set('userId', '1'),
@@ -35,5 +35,7 @@ export class ContactService {
     };
     return this.http.get<T>(this.actionUrl + '/' + id, options);
   }
+
+
 
 }

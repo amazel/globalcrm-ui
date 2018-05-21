@@ -14,8 +14,10 @@ import {ContactSubheaderComponent} from './contacts/contact-subheader/contact-su
 import {ContactDetailComponent} from './contacts/contact-detail/contact-detail.component';
 import {ContactListItemComponent} from './contacts/contact-list/contact-list-item/contact-list-item.component';
 import {Configuration} from './app.configuration';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppRouterModule} from './app-router.module';
+import {AuthInterceptor} from "./auth.interceptor";
+import {ContactService} from "./contacts/contact.service";
 
 @NgModule({
   declarations: [
@@ -37,7 +39,11 @@ import {AppRouterModule} from './app-router.module';
     AppRouterModule,
     HttpClientModule
   ],
-  providers: [Configuration],
+  providers: [
+    ContactService,
+    Configuration,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
