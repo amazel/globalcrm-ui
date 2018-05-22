@@ -16,8 +16,10 @@ import {ContactListItemComponent} from './contacts/contact-list/contact-list-ite
 import {Configuration} from './app.configuration';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppRouterModule} from './app-router.module';
-import {AuthInterceptor} from "./auth.interceptor";
-import {ContactService} from "./contacts/contact.service";
+import {AuthInterceptor} from './auth.interceptor';
+import {ContactService} from './contacts/contact.service';
+import {AuthModule} from './auth/auth.module';
+import {AuthService} from './auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -37,9 +39,11 @@ import {ContactService} from "./contacts/contact.service";
   imports: [
     BrowserModule,
     AppRouterModule,
+    AuthModule,
     HttpClientModule
   ],
   providers: [
+    AuthService,
     ContactService,
     Configuration,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

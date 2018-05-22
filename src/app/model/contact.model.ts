@@ -10,19 +10,22 @@ class Company {
 class VisibleFor {
 }
 
+class Sale {
+}
+
 export class Contact {
   public id: number;
   public names: string;
   public lastNames: string;
-  private creationDateTime: Date;
-  private createdBy: User;
+  public creationDateTime: Date;
+  public createdBy: User;
 
-  private contactType: ContactType;
-  private phones: Map = new Map();
-  private emails: Map = new Map();
-  private company: Company;
-  private visibleFor: VisibleFor;
-  private sales: Set;
+  public contactType: ContactType;
+  // private phones: Map = new Map();
+  // private emails: Map = new Map();
+  public company: Company;
+  public visibleFor: VisibleFor;
+  public sales: Set<Sale>;
 
 
 }

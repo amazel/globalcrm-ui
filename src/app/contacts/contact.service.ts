@@ -18,7 +18,6 @@ export class ContactService {
       params: new HttpParams().set('accountId', accountId),
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
-        // 'Authorization': 'my-auth-token'
       })
     };
     return this.http.get<T>(this.actionUrl, options);
@@ -30,7 +29,6 @@ export class ContactService {
       params: new HttpParams().set('userId', '1'),
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
-        // 'Authorization': 'my-auth-token'
       })
     };
     return this.http.get<T>(this.actionUrl + '/' + id, options);
