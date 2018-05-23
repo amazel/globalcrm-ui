@@ -1,39 +1,23 @@
 import {Injectable} from '@angular/core';
-import {Configuration} from '../app.configuration';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {environment} from '../../environments/environment';
+import {DataService} from '../data.service';
 
 
 @Injectable()
 export class ContactService {
 
-  private actionUrl: string;
-
-  constructor(private http: HttpClient, private _configuration: Configuration) {
-    this.actionUrl = _configuration.apiUrl + '/contacts';
+  constructor(private dataService: DataService) {
+    dataService.actionUrl = environment.apiUrl + '/contacts';
   }
 
-  public getAll<T>(accountId: string): Observable<T> {
-    const options = {
-      params: new HttpParams().set('accountId', accountId),
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.get<T>(this.actionUrl, options);
+  getContacts(accountId: string) {
+    return this.dataService.getAll('accountId', accountId);
   }
 
-  public getSingle<T>(id: number): Observable<T> {
+  public getContact(id: number) {
     console.log('Getting contact: ' + id);
-    const options = {
-      params: new HttpParams().set('userId', '1'),
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    return this.http.get<T>(this.actionUrl + '/' + id, options);
+    const params = new Map<String, String>();
+    params.set('userId', '1');
+    return this.dataService.getSingle(id, params);
   }
-
-
-
 }

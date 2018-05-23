@@ -13,13 +13,13 @@ import {SalesComponent} from './sales/sales.component';
 import {ContactSubheaderComponent} from './contacts/contact-subheader/contact-subheader.component';
 import {ContactDetailComponent} from './contacts/contact-detail/contact-detail.component';
 import {ContactListItemComponent} from './contacts/contact-list/contact-list-item/contact-list-item.component';
-import {Configuration} from './app.configuration';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppRouterModule} from './app-router.module';
 import {AuthInterceptor} from './auth.interceptor';
 import {ContactService} from './contacts/contact.service';
 import {AuthModule} from './auth/auth.module';
 import {AuthService} from './auth/auth.service';
+import {DataService} from './data.service';
 
 @NgModule({
   declarations: [
@@ -44,8 +44,8 @@ import {AuthService} from './auth/auth.service';
   ],
   providers: [
     AuthService,
+    DataService,
     ContactService,
-    Configuration,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
