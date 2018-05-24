@@ -1,5 +1,4 @@
-class User {
-}
+import {User} from './user.model';
 
 class ContactType {
 }

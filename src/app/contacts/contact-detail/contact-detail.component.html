@@ -14,7 +14,7 @@
         <th scope="row">{{currentContact?.id}}</th>
         <th>{{currentContact?.names}}</th>
         <th>{{currentContact?.lastNames}}</th>
-        <th>{{currentContact?.creationDateTime}}</th>
+        <th>{{currentContact?.creationDateTime | date:'fullDate'}}</th>
       </tr>
 
       </tbody>
