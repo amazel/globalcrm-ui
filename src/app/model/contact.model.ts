@@ -1,13 +1,13 @@
 import {User} from './user.model';
+import {VisibleFor} from "./visible-for.enum";
+import {PhoneType} from "./phone-type.enum";
+import {EmailType} from "./email-type.enum";
+import {Company} from "./company.model";
 
 class ContactType {
 }
 
-class Company {
-}
 
-class VisibleFor {
-}
 
 class Sale {
 }
@@ -20,11 +20,14 @@ export class Contact {
   public createdBy: User;
 
   public contactType: ContactType;
-  // private phones: Map = new Map();
-  // private emails: Map = new Map();
+  public phones: Map<PhoneType, string> = new Map();
+  public emails: Map<EmailType, string> = new Map();
   public company: Company;
   public visibleFor: VisibleFor;
   public sales: Set<Sale>;
 
 
+  public getPhones(): IterableIterator<string> {
+    return this.phones.values();
+  }
 }

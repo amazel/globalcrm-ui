@@ -18,4 +18,5 @@ export class ContactListItemComponent implements OnInit {
 
   onSelected() {
   }
+
 }

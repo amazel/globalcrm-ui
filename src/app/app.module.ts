@@ -20,6 +20,7 @@ import {ContactService} from './contacts/contact.service';
 import {AuthModule} from './auth/auth.module';
 import {AuthService} from './auth/auth.service';
 import {DataService} from './data.service';
+import {CollapseModule} from "ngx-bootstrap";
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {DataService} from './data.service';
     BrowserModule,
     AppRouterModule,
     AuthModule,
-    HttpClientModule
+    HttpClientModule,
+    CollapseModule.forRoot()
   ],
   providers: [
     AuthService,

@@ -1,8 +1,26 @@
-<div>
-  <a
-    [routerLink]="['/contacts',contact.id]"
-    class="list-group-item clearfix"
-    (click)="onSelected()">
-    <h4 class="list-group-item-heading">{{ contact.names }} {{contact.lastNames}}</h4>
-  </a>
+<div class="card shadow">
+  <div class="card-header">
+    <a
+      [routerLink]="['/contacts',contact.id]"
+      (click)="onSelected()" class="card-link">
+      <h6 class="my-0 font-weight-normal">{{ contact.names }} {{contact.lastNames}}</h6>
+    </a>
+  </div>
+  <div class="card-body">
+    <ul class="list-unstyled" style="font-size: 11px">
+      <li class="card-subtitle">
+        {{contact.company.name}}
+      </li>
+      <li class="card-subtitle">
+        <span *ngIf="contact.phones.WORK">Trabajo: {{contact.phones.WORK}} </span>
+        <span *ngIf="contact.phones.MOBILE">Celular: {{contact.phones.MOBILE}} </span>
+        <span *ngIf="contact.phones.FAX">FAX: {{contact.phones.FAX}} </span>
+        <span *ngIf="contact.phones.HOME">Casa: {{contact.phones.HOME}} </span>
+        <span *ngIf="contact.phones.SKYPE">Skype: {{contact.phones.SKYPE}} </span>
+      </li>
+    </ul>
+  </div>
+  <div class="card-footer"><span class="badge badge-primary badge-pill">Edit</span></div>
 </div>
+
+

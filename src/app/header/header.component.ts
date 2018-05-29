@@ -6,6 +6,7 @@ import {AuthService} from '../auth/auth.service';
   templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit {
+  isCollapsed = true;
 
   constructor(private authService: AuthService) {
   }
