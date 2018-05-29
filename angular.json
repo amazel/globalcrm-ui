@@ -27,7 +27,6 @@
               "src/styles.css"
             ],
             "scripts": [
-
             ]
           },
           "configurations": {
@@ -47,6 +46,14 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "aws": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.aws.ts"
+                }
+              ]
             }
           }
         },

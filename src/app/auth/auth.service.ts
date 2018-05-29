@@ -1,17 +1,19 @@
 import {ActivatedRoute, Router} from '@angular/router';
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {UserAuth} from '../model/user-auth.model';
 import * as JWT from 'jwt-decode';
 import {environment} from '../../environments/environment';
+import {Subscription} from 'rxjs/internal/Subscription';
 
 @Injectable()
-export class AuthService implements OnInit {
+export class AuthService implements OnInit, OnDestroy {
   private actionUrl: string;
   private userIdSession = 'userId';
   private accountIdSession = 'accountId';
   private tokenSession = 'token';
   private returnUrl: string;
+  private httpSubscription: Subscription;
 
   constructor(
     private router: Router,
@@ -35,7 +37,7 @@ export class AuthService implements OnInit {
         'Content-Type': 'application/json'
       })
     };
-    this.httpClient.post(this.actionUrl, {}, options).subscribe(
+    this.httpSubscription = this.httpClient.post(this.actionUrl, {}, options).subscribe(
       (response: UserAuth) => {
         this.setSession(response);
         this.router.navigateByUrl(this.returnUrl);
@@ -85,6 +87,11 @@ export class AuthService implements OnInit {
     }
     const decodedJWT = (decoded as any);
     return decodedJWT.exp < new Date().getTime() / 1000;
+  }
+
+  ngOnDestroy(): void {
+    this.httpSubscription.unsubscribe();
+
   }
 
 }
