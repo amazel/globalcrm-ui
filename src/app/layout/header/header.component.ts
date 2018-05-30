@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../auth/auth.service';
 import {Router} from '@angular/router';
 
+declare var jQuery: any;
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -20,4 +22,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  onToggleButtonClick(event: any) {
+    event.preventDefault();
+    jQuery('#app').toggleClass('sidebar-open');
+  }
 }

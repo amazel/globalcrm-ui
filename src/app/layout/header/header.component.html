@@ -1,6 +1,6 @@
 <header class="header">
   <div class="header-block header-block-collapse d-lg-none d-xl-none">
-    <button class="collapse-btn" id="sidebar-collapse-btn">
+    <button class="collapse-btn" id="sidebar-collapse-btn" (click)="onToggleButtonClick($event)">
       <i class="fa fa-bars"></i>
     </button>
   </div>
@@ -16,9 +16,8 @@
   </div>
 
   <div class="header-block header-block-nav">
-    <ul class="nav-profile">
+    <ul class="nav-profile list-unstyled">
       <li class="profile dropdown">
-
 
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
            aria-expanded="false">
