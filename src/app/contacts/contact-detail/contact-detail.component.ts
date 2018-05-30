@@ -11,7 +11,8 @@ import {Subscription} from 'rxjs/internal/Subscription';
 })
 export class ContactDetailComponent implements OnInit, OnDestroy {
 
-  private subscription: Subscription;
+  private paramSubscription: Subscription;
+  private serviceSubscription: Subscription;
 
   currentContact: Contact;
   id: number;
@@ -21,21 +22,21 @@ export class ContactDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription.add(this.route.params
+    this.paramSubscription = this.route.params
       .subscribe(
         (params: Params) => {
           this.id = +params['id'];
-          this.subscription.add(this.contactService.getContact(this.id)
-              .subscribe(
-            (data: Contact) => this.currentContact = data
-          ));
+          this.serviceSubscription = this.contactService.getContact(this.id)
+            .subscribe(
+              (data: Contact) => this.currentContact = data
+            );
         }
-      ));
-
+      );
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.paramSubscription.unsubscribe();
+    this.serviceSubscription.unsubscribe();
   }
 
 }

@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { LoginComponent } from './login/login.component';
-import { AuthRoutingModule } from './auth-routing.module';
 import {AuthGuard} from './auth-guard.service';
 
 @NgModule({
@@ -10,8 +8,7 @@ import {AuthGuard} from './auth-guard.service';
     LoginComponent
   ],
   imports: [
-    FormsModule,
-    AuthRoutingModule
+    FormsModule
   ],
   providers: [AuthGuard]
 })

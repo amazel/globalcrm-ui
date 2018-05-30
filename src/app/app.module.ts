@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {HeaderComponent} from './header/header.component';
+import {HeaderComponent} from './layout/header/header.component';
 import {ContactsComponent} from './contacts/contacts.component';
 import {ContactListComponent} from './contacts/contact-list/contact-list.component';
 import {ContactFilterComponent} from './contacts/contact-filter/contact-filter.component';
@@ -10,7 +10,6 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {TasksComponent} from './tasks/tasks.component';
 import {CompaniesComponent} from './companies/companies.component';
 import {SalesComponent} from './sales/sales.component';
-import {ContactSubheaderComponent} from './contacts/contact-subheader/contact-subheader.component';
 import {ContactDetailComponent} from './contacts/contact-detail/contact-detail.component';
 import {ContactListItemComponent} from './contacts/contact-list/contact-list-item/contact-list-item.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -20,7 +19,9 @@ import {ContactService} from './contacts/contact.service';
 import {AuthModule} from './auth/auth.module';
 import {AuthService} from './auth/auth.service';
 import {DataService} from './data.service';
-import {CollapseModule} from "ngx-bootstrap";
+import {SidebarComponent} from './layout/sidebar/sidebar.component';
+import {ProfileComponent} from './layout/header/profile/profile.component';
+import {LayoutComponent} from './layout/layout.component';
 
 @NgModule({
   declarations: [
@@ -33,16 +34,17 @@ import {CollapseModule} from "ngx-bootstrap";
     ContactsComponent,
     ContactListComponent,
     ContactFilterComponent,
-    ContactSubheaderComponent,
     ContactDetailComponent,
-    ContactListItemComponent
+    ContactListItemComponent,
+    SidebarComponent,
+    ProfileComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,
     AppRouterModule,
     AuthModule,
-    HttpClientModule,
-    CollapseModule.forRoot()
+    HttpClientModule
   ],
   providers: [
     AuthService,
