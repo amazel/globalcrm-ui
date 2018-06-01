@@ -1,0 +1,11 @@
+@import '../../../../_main';
+@import '../../../app.component';
+@import '../../../../_common/items-list/items-list';
+@import '../../contact-filter/contact-filter.component';
+@import '../../../../_common/form/form';
+@import '../../../../_common/button/button';
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}

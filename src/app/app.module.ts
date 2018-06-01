@@ -22,6 +22,8 @@ import {DataService} from './data.service';
 import {SidebarComponent} from './layout/sidebar/sidebar.component';
 import {ProfileComponent} from './layout/header/profile/profile.component';
 import {LayoutComponent} from './layout/layout.component';
+import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,13 +40,15 @@ import {LayoutComponent} from './layout/layout.component';
     ContactListItemComponent,
     SidebarComponent,
     ProfileComponent,
-    LayoutComponent
+    LayoutComponent,
+    ContactsFilterPipe
   ],
   imports: [
     BrowserModule,
     AppRouterModule,
     AuthModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     AuthService,

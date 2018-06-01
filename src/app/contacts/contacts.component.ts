@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {ContactService} from './contact.service';
+import {Component, HostBinding, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.css']
+  styleUrls: ['./contacts.component.scss']
 })
 export class ContactsComponent implements OnInit {
+  @HostBinding('class.module') classM = true;
 
   constructor() {
   }

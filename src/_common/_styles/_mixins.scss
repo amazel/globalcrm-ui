@@ -6,7 +6,7 @@
 
 // @mixin triangle-base() {
 //     content: '';
-//     display: block;
+//     lt
 //     width: 0;
 //     height: 0;
 //     -moz-transform: scale(.9999);
@@ -39,13 +39,25 @@
 //     border-left: $height solid $color;
 // }
 
-$grid-breakpoints: (
-  xs: 0,
-  sm: 480px,
-  md: 768px,
-  lg: 1024px
-);
+//$grid-breakpoints: (
+//  xs: 0,
+//  sm: 480px,
+//  md: 768px,
+//  lg: 1024px
+//);
 
+$grid-breakpoints: (
+  // Extra small screen / phone
+  xs: 0,
+  // Small screen / phone
+  sm: 576px,
+  // Medium screen / tablet
+  md: 768px,
+  // Large screen / desktop
+  lg: 992px,
+  // Extra large screen / wide desktop
+  xl: 1200px
+);
 /*****************************************
 *       Background-image: cover mixin
 ******************************************/

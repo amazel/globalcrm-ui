@@ -1,26 +1,98 @@
-<div class="card shadow">
-  <div class="card-header">
-    <a
-      [routerLink]="['/contacts',contact.id]"
-      (click)="onSelected()" class="card-link">
-      <h6 class="my-0 font-weight-normal">{{ contact.names }} {{contact.lastNames}}</h6>
-    </a>
+<li class="item">
+  <div class="item-row">
+    <div class="item-col fixed item-col-check">
+      <label class="item-check" id="select-all-items">
+        <input type="checkbox" class="checkbox">
+      </label>
+    </div>
+
+    <div class="item-col fixed pull-left item-col-title">
+      <div>
+        <a [routerLink]="['/contacts',contact.id]" (click)="onSelected()">
+          <h6 class="item-title"> {{ contact.names }} {{contact.lastNames}}</h6>
+        </a>
+      </div>
+    </div>
+    <div class="item-col item-col-category">
+      <div>{{contact.company.name}}</div>
+    </div>
+    <div class="item-col item-col-category">
+      <div>
+        <ul>
+          <li *ngFor="let phone of getPhones(contact.phones)" class="list-unstyled">
+            <span class="badge badge-pill badge-primary">
+              <i class="fa fa-home" ngClass="phone.type"></i>
+            </span>
+            {{phone.value}}
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="item-col item-col-category">
+      <div>
+        <span *ngFor="let email of getEmails(contact.emails)">
+          <span class="badge badge-pill badge-primary"></span>{{email.value}}
+          </span>
+      </div>
+    </div>
+
+    <div class="item-col fixed item-col-actions-dropdown">
+      <div class="item-actions-dropdown">
+        <a class="item-actions-toggle-btn">
+          <span class="inactive">
+            <i class="fa fa-cog"></i>
+          </span>
+          <span class="active">
+            <i class="fa fa-chevron-circle-right"></i>
+          </span>
+        </a>
+        <div class="item-actions-block">
+          <ul class="item-actions-list">
+            <li>
+              <a class="remove" href="#" data-toggle="modal" data-target="#confirm-modal">
+                <i class="fa fa-trash-o "></i>
+              </a>
+            </li>
+            <li>
+              <a class="edit" href="item-editor.html">
+                <i class="fa fa-pencil"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="card-body">
-    <ul class="list-unstyled" style="font-size: 11px">
-      <li class="card-subtitle">
-        {{contact.company.name}}
-      </li>
-      <li class="card-subtitle">
-        <span *ngIf="contact.phones.WORK">Trabajo: {{contact.phones.WORK}} </span>
-        <span *ngIf="contact.phones.MOBILE">Celular: {{contact.phones.MOBILE}} </span>
-        <span *ngIf="contact.phones.FAX">FAX: {{contact.phones.FAX}} </span>
-        <span *ngIf="contact.phones.HOME">Casa: {{contact.phones.HOME}} </span>
-        <span *ngIf="contact.phones.SKYPE">Skype: {{contact.phones.SKYPE}} </span>
-      </li>
-    </ul>
-  </div>
-  <div class="card-footer"><span class="badge badge-primary badge-pill">Edit</span></div>
-</div>
+</li>
+
+<!--<div class="card shadow">-->
+<!--<div class="card-header">-->
+<!--<a-->
+<!--[routerLink]="['/contacts',contact.id]"-->
+<!--(click)="onSelected()" class="card-link">-->
+<!--<h6 class="my-0 font-weight-normal">{{ contact.names }} {{contact.lastNames}}</h6>-->
+<!--</a>-->
+<!--</div>-->
+<!--<div class="card-body">-->
+<!--<ul class="list-unstyled" style="font-size: 11px">-->
+<!--<li class="card-subtitle">-->
+<!--{{contact.company.name}}-->
+<!--</li>-->
+<!--<li class="card-subtitle">-->
+<!--<span *ngIf="contact.phones.WORK">Trabajo: {{contact.phones.WORK}} </span>-->
+<!--<span *ngIf="contact.phones.MOBILE">Celular: {{contact.phones.MOBILE}} </span>-->
+<!--<span *ngIf="contact.phones.FAX">FAX: {{contact.phones.FAX}} </span>-->
+<!--<span *ngIf="contact.phones.HOME">Casa: {{contact.phones.HOME}} </span>-->
+<!--<span *ngIf="contact.phones.SKYPE">Skype: {{contact.phones.SKYPE}} </span>-->
+<!--</li>-->
+<!--<li class="card-subtitle">-->
+<!--<span *ngFor="let email of getEmails(contact.emails)">{{email.type}} - {{email.value}}-->
+<!--</span>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
 
 

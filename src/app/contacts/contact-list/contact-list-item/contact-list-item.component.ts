@@ -5,7 +5,7 @@ import {ContactService} from '../../contact.service';
 @Component({
   selector: 'app-contact-list-item',
   templateUrl: './contact-list-item.component.html',
-  styleUrls: ['./contact-list-item.component.css']
+  styleUrls: ['./contact-list-item.component.scss']
 })
 export class ContactListItemComponent implements OnInit {
   @Input() contact: Contact;
@@ -19,4 +19,32 @@ export class ContactListItemComponent implements OnInit {
   onSelected() {
   }
 
+  getEmails(emails) {
+    const list = new Set();
+    for (const email in emails) {
+      if (emails[email]) {
+        list.add({
+            'type': email,
+            'value': emails[email]
+          }
+        );
+      }
+    }
+    return list;
+  }
+
+  getPhones(phones) {
+    const list = new Set();
+    for (const phone in phones) {
+      if (phones[phone]) {
+        // todo implement pills logic
+        list.add({
+            'type': 'fa fa-home',
+            'value': phones[phone]
+          }
+        );
+      }
+    }
+    return list;
+  }
 }

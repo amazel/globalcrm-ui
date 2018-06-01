@@ -1,14 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ContactFilter} from '../contact-filter';
+import {ContactService} from '../contact.service';
 
 @Component({
   selector: 'app-contacts-filter',
-  templateUrl: './contact-filter.component.html'
+  templateUrl: './contact-filter.component.html',
+  styleUrls: ['./contact-filter.component.scss']
 })
 export class ContactFilterComponent implements OnInit {
 
-  constructor() { }
+  filter: ContactFilter = new ContactFilter();
+
+  constructor(private contactService: ContactService) {
+  }
 
   ngOnInit() {
+    this.contactService.filterSubject.next(this.filter);
   }
 
 }

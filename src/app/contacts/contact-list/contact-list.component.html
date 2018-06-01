@@ -1,4 +1,66 @@
+<div class="card items">
+  <ul class="item-list striped">
+    <li class="item item-list-header">
+      <div class="item-row">
+        <div class="item-col fixed item-col-check">
+          <label class="item-check" id="select-all-items">
+            <input type="checkbox" class="checkbox">
+          </label>
+        </div>
+        <div class="item-col item-col-header item-col-title">
+          <div>
+            <span>Nombre</span>
+          </div>
+        </div>
+        <div class="item-col item-col-header item-col-category">
+          <div>
+            <span>Cliente</span>
+          </div>
+        </div>
+        <div class="item-col item-col-header item-col-category">
+          <div>
+            <span>Telefono</span>
+          </div>
+        </div>
+        <div class="item-col item-col-header item-col-category">
+          <!--<div class="no-overflow">-->
+          <div>
+            <span>Correo</span>
+          </div>
+        </div>
+        <div class="item-col item-col-header fixed item-col-actions-dropdown"></div>
+      </div>
+    </li>
+
 
     <app-contact-list-item
-      *ngFor="let contactItem of contacts"
+      *ngFor="let contactItem of contacts | contactsFilter:contactFilter "
       [contact]="contactItem"></app-contact-list-item>
+  </ul>
+</div>
+<nav class="text-right">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href=""> Prev </a>
+    </li>
+    <li class="page-item active">
+      <a class="page-link" href=""> 1 </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href=""> 2 </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href=""> 3 </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href=""> 4 </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href=""> 5 </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href=""> Next </a>
+    </li>
+  </ul>
+</nav>
+

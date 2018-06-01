@@ -1,12 +1,11 @@
 import {User} from './user.model';
-import {VisibleFor} from "./visible-for.enum";
-import {PhoneType} from "./phone-type.enum";
-import {EmailType} from "./email-type.enum";
-import {Company} from "./company.model";
+import {VisibleFor} from './visible-for.enum';
+import {PhoneType} from './phone-type.enum';
+import {EmailType} from './email-type.enum';
+import {Company} from './company.model';
 
 class ContactType {
 }
-
 
 
 class Sale {

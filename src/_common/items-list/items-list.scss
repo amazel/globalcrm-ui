@@ -55,7 +55,7 @@ $item-list-col-shrink: 3 !default;
 ********************************************** */
 
 
-.item-list {
+//.item-list {
 	.item {
 		display: flex;
 		flex-direction: column;
@@ -117,7 +117,7 @@ $item-list-col-shrink: 3 !default;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-}
+//}
 
 
 /* *******************************************
@@ -125,7 +125,7 @@ $item-list-col-shrink: 3 !default;
 ********************************************** */
 
 
-.item-list {
+//.item-list {
 
 	/********************************************
 	*					Header
@@ -367,7 +367,7 @@ $item-list-col-shrink: 3 !default;
 	*			   Something else?
 	*********************************************/
 
-}
+//}
 
 
 /* *******************************************
