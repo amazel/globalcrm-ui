@@ -9,6 +9,7 @@ import {ContactService} from '../../contact.service';
 })
 export class ContactListItemComponent implements OnInit {
   @Input() contact: Contact;
+  clicked = false;
 
   constructor(private contactService: ContactService) {
   }
@@ -24,7 +25,7 @@ export class ContactListItemComponent implements OnInit {
     for (const email in emails) {
       if (emails[email]) {
         list.add({
-            'type': email,
+            'type': 'fa fa-home',
             'value': emails[email]
           }
         );

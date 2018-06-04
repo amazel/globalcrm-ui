@@ -1,3 +1,46 @@
+<div class="auth">
+  <div class="auth-container">
+    <div class="card">
+      <header class="auth-header">
+        <h1 class="auth-title">
+
+        </h1>
+      </header>
+      <div class="auth-content">
+        <p class="text-center">Inicia sesion</p>
+        <form (ngSubmit)="onLogin(f)" #f="ngForm" id="login-form">
+          <div class="form-group">
+            <label for="email">Correo electronico</label>
+            <input type="email" class="form-control underlined" name="email" id="email"
+                   placeholder="Ingresa tu correo" ngModel required>
+          </div>
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" class="form-control underlined" name="password" id="password"
+                   placeholder="Tu contraseña" ngModel required>
+          </div>
+          <div class="form-group">
+            <label for="remember">
+              <input class="checkbox" id="remember" type="checkbox">
+              <span>Remember me</span>
+            </label>
+
+            <a href="reset.html" class="forgot-btn pull-right">Olvidaste la contraseña?</a>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-block btn-primary" [disabled]="!f.valid">Entrar</button>
+          </div>
+          <div class="form-group">
+            <p class="text-muted text-center"><a href="signup.html">Registrate en CRM Global!</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!--
 <div class="body text-center">
   <form (ngSubmit)="onLogin(f)" #f="ngForm" class="form-signin">
     <div class="form-group">
@@ -22,3 +65,4 @@
     <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Aceptar</button>
   </form>
 </div>
+-->
