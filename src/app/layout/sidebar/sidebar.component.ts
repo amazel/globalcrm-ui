@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import 'metismenu';
 
-declare var jQuery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-sidebar',
@@ -16,8 +16,13 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   ngOnInit() {
   }
 
+  onOverlayClick() {
+    $('#sidebar').removeClass('sidebar-open');
+    $('#sidebar-overlay').removeClass('sidebar-open');
+  }
+
   ngAfterViewInit() {
-    jQuery('#sidebar-menu').metisMenu({
+    (<any>$('#sidebar-menu')).metisMenu({
       activeClass: 'open'
     });
   }

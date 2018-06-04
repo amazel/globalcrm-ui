@@ -9,46 +9,36 @@ import {ContactFilter} from './contact-filter';
 export class ContactsFilterPipe implements PipeTransform {
 
   transform(contacts: Contact[], filter: ContactFilter): any {
-    console.log('Pipe- Transform ', filter);
-    if (!contacts || !filter) {
+    if (!contacts || !filter.filter) {
       return contacts;
     }
 
-    return contacts.filter((item: Contact) => this.applyFilter(item, filter));
+    return contacts.filter((item: Contact) => this.applyFilter(item, filter.filter));
   }
 
-  applyFilter(contact: Contact, filter: ContactFilter): boolean {
-    for (const field in filter) {
-      if (filter[field]) {
-        if (field === 'name') {
-          if ((contact['names'].toLowerCase().indexOf(filter[field].toLowerCase()) >= 0) ||
-            (contact['lastNames'].toLowerCase().indexOf(filter[field].toLowerCase()) >= 0) === false) {
-            return false;
-          }
-        } else if (field === 'phone') {
-          let foundPhone = false;
-          for (const phone in contact.phones) {
-            if (contact.phones[phone] && contact.phones[phone].indexOf(filter[field]) >= 0) {
-              foundPhone = true;
-            }
-          }
-          if (foundPhone === false) {
-            return false;
-          }
-        } else if (field === 'email') {
-          let foundEmail = false;
-          for (const email in contact.emails) {
-            if (contact.emails[email] && contact.emails[email].indexOf(filter[field]) >= 0) {
-              foundEmail = true;
-            }
-          }
-          if (foundEmail === false) {
-            return false;
-          }
-        }
+  applyFilter(contact: Contact, filter: string): boolean {
+
+    if ((contact['names'].toLowerCase().indexOf(filter.toLowerCase()) >= 0) ||
+      (contact['lastNames'].toLowerCase().indexOf(filter.toLowerCase()) >= 0)) {
+      return true;
+    }
+
+    if (contact.company.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0) {
+      return true;
+    }
+
+    for (const phone in contact.phones) {
+      if (contact.phones[phone] && contact.phones[phone].indexOf(filter) >= 0) {
+        return true;
       }
     }
-    return true;
+
+    for (const email in contact.emails) {
+      if (contact.emails[email] && contact.emails[email].indexOf(filter) >= 0) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

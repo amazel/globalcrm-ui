@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../auth/auth.service';
 import {Router} from '@angular/router';
 import 'metismenu';
@@ -10,7 +10,7 @@ declare var $: any;
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -25,16 +25,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   onToggleButtonClick(event: any) {
     event.preventDefault();
-    $('#app').toggleClass('sidebar-open');
-  }
-
-  onOverlayClick() {
-    $('#app').removeClass('sidebar-open');
-  }
-
-  ngAfterViewInit() {
-    (<any>$('#sidebar-menu')).metisMenu({
-      activeClass: 'open'
-    });
+    $('#sidebar').addClass('sidebar-open');
+    $('#sidebar-overlay').addClass('sidebar-open');
   }
 }
