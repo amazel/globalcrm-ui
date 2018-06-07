@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Contact} from '../../model/contact.model';
-import {ContactService} from '../contact.service';
+import {ContactService} from '../../services/contact.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Subscription} from 'rxjs/internal/Subscription';
 

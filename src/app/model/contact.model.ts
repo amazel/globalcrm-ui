@@ -1,7 +1,5 @@
 import {User} from './user.model';
 import {VisibleFor} from './visible-for.enum';
-import {PhoneType} from './phone-type.enum';
-import {EmailType} from './email-type.enum';
 import {Company} from './company.model';
 
 class ContactType {
@@ -19,14 +17,9 @@ export class Contact {
   public createdBy: User;
 
   public contactType: ContactType;
-  public phones: Map<PhoneType, string> = new Map();
-  public emails: Map<EmailType, string> = new Map();
+  public phones: Set<Phone> = new Set();
+  public emails: Set<Email> = new Set();
   public company: Company;
   public visibleFor: VisibleFor;
   public sales: Set<Sale>;
-
-
-  public getPhones(): IterableIterator<string> {
-    return this.phones.values();
-  }
 }

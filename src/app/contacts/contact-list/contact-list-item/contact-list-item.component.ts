@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Contact} from '../../../model/contact.model';
-import {ContactService} from '../../contact.service';
+import {ContactService} from '../../../services/contact.service';
 
 @Component({
   selector: 'app-contact-list-item',
@@ -20,31 +20,27 @@ export class ContactListItemComponent implements OnInit {
   onSelected() {
   }
 
-  getEmails(emails) {
+  getEmails(emails: Set<Email>) {
     const list = new Set();
-    for (const email in emails) {
-      if (emails[email]) {
-        list.add({
-            'type': 'fa fa-home',
-            'value': emails[email]
-          }
-        );
-      }
+    for (const email of emails) {
+      list.add({
+          'type': 'fa fa-home',
+          'value': email.email
+        }
+      );
     }
     return list;
   }
 
-  getPhones(phones) {
+  getPhones(phones: Set<Phone>) {
     const list = new Set();
-    for (const phone in phones) {
-      if (phones[phone]) {
-        // todo implement pills logic
-        list.add({
-            'type': 'fa fa-home',
-            'value': phones[phone]
-          }
-        );
-      }
+    for (const phone of phones) {
+      // todo implement pills logic
+      list.add({
+          'type': 'fa fa-home',
+          'value': phone.phone
+        }
+      );
     }
     return list;
   }

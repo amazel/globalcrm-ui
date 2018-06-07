@@ -15,15 +15,16 @@ import {ContactListItemComponent} from './contacts/contact-list/contact-list-ite
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppRouterModule} from './app-router.module';
 import {AuthInterceptor} from './auth.interceptor';
-import {ContactService} from './contacts/contact.service';
+import {ContactService} from './services/contact.service';
 import {AuthModule} from './auth/auth.module';
 import {AuthService} from './auth/auth.service';
-import {DataService} from './data.service';
+import {DataService} from './services/data.service';
 import {SidebarComponent} from './layout/sidebar/sidebar.component';
 import {ProfileComponent} from './layout/header/profile/profile.component';
 import {LayoutComponent} from './layout/layout.component';
 import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CompanyService} from './services/company.service';
 
 @NgModule({
   declarations: [
@@ -48,12 +49,14 @@ import {FormsModule} from '@angular/forms';
     AppRouterModule,
     AuthModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthService,
     DataService,
     ContactService,
+    CompanyService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]

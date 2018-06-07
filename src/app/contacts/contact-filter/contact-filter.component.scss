@@ -1,8 +1,10 @@
 @import '../../app.component';
 @import '../../../_main';
 @import '../../../_common/button/button';
+@import '../../../_common/form/form';
 @import '../../../_common/_styles/typography';
 @import '../../../_common/_styles/layout';
+
 
 $item-list-padding-x: 10px !default;
 $item-list-padding-y: 10px !default;
@@ -10,6 +12,37 @@ $item-list-line-height: 1.4rem !default;
 $item-list-col-grow: 3 !default;
 $item-list-col-shrink: 3 !default;
 
+.form-group {
+  margin-bottom: .4rem;
+}
+.modal-header {
+  padding: .7rem;
+  background-color: $sidebar-color-primary;
+  color: #fff;
+}
+.modal-footer {
+  padding: .6rem;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: .2rem;
+}
+
+a:not([href]).trash-link{
+  color: lighten($color-text-light, 10);
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  line-height: 30px;
+  text-align: center;
+  text-decoration: none;
+}
+
+a:not([href]):hover, a:not([href]):focus {
+  color: $color-primary;
+  text-decoration: none;
+}
 .title-search-block {
   position: relative;
 }
@@ -321,4 +354,5 @@ $item-list-col-shrink: 3 !default;
     }
   }
 }
+
 
