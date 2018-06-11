@@ -27,14 +27,14 @@ export class ContactsFilterPipe implements PipeTransform {
       return true;
     }
 
-    for (const phone in contact.phones) {
-      if (contact.phones[phone] && contact.phones[phone].indexOf(filter) >= 0) {
+    for (const phone of contact.phones) {
+      if (phone.phone.indexOf(filter) >= 0) {
         return true;
       }
     }
 
-    for (const email in contact.emails) {
-      if (contact.emails[email] && contact.emails[email].indexOf(filter) >= 0) {
+    for (const email of contact.emails) {
+      if (email.email.indexOf(filter) >= 0) {
         return true;
       }
     }

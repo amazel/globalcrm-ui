@@ -2,33 +2,40 @@
   <div class="auth-container">
     <div class="card">
       <header class="auth-header">
-        <h1 class="auth-title">
-
-        </h1>
+        <h1 class="auth-title"></h1>
       </header>
+
       <div class="auth-content">
         <p class="text-center">Inicia sesion</p>
-        <form (ngSubmit)="onLogin(f)" #f="ngForm" id="login-form">
+        <div *ngIf="message" class="form-group"
+             [ngClass]="{ 'alert alert-danger': message.type === 'error' }">{{message
+          .text}}
+        </div>
+        <form (ngSubmit)="onLogin()" [formGroup]="loginForm">
           <div class="form-group">
             <label for="email">Correo electronico</label>
-            <input type="email" class="form-control underlined" name="email" id="email"
-                   placeholder="Ingresa tu correo" ngModel required>
+            <input type="email" class="form-control underlined" formControlName="email" id="email"
+                   placeholder="Ingresa tu correo" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">El correo es requerido</div>
+            </div>
           </div>
           <div class="form-group">
             <label for="password">Contraseña</label>
-            <input type="password" class="form-control underlined" name="password" id="password"
-                   placeholder="Tu contraseña" ngModel required>
+            <input type="password" class="form-control underlined" formControlName="password" id="password"
+                   placeholder="Tu contraseña" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">La contrasena es requerida</div>
+            </div>
           </div>
           <div class="form-group">
             <label for="remember">
-              <input class="checkbox" id="remember" type="checkbox">
-              <span>Remember me</span>
+              <input class="checkbox" id="remember" type="checkbox"> <span>Remember me</span>
             </label>
-
             <a href="reset.html" class="forgot-btn pull-right">Olvidaste la contraseña?</a>
           </div>
           <div class="form-group">
-            <button type="submit" class="btn btn-block btn-primary" [disabled]="!f.valid">Entrar</button>
+            <button type="submit" class="btn btn-block btn-primary" [disabled]="loading">Entrar</button>
           </div>
           <div class="form-group">
             <p class="text-muted text-center"><a href="signup.html">Registrate en CRM Global!</a></p>
