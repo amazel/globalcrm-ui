@@ -1,4 +1,4 @@
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {UserAuth} from '../model/user-auth.model';
@@ -12,23 +12,21 @@ export class AuthService implements OnInit, OnDestroy {
   private userIdSession = 'userId';
   private accountIdSession = 'accountId';
   private tokenSession = 'token';
-  private returnUrl: string;
   private httpSubscription: Subscription;
 
   constructor(
     private router: Router,
-    private httpClient: HttpClient,
-    private route: ActivatedRoute) {
+    private httpClient: HttpClient) {
     this.actionUrl = environment.server + 'public/login';
     console.log(this.actionUrl);
   }
 
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
   }
 
   public login(email: string, password: string) {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
     const options = {
       params: new HttpParams()
         .set('email', email)
@@ -37,18 +35,10 @@ export class AuthService implements OnInit, OnDestroy {
         'Content-Type': 'application/json'
       })
     };
-    this.httpSubscription = this.httpClient.post(this.actionUrl, {}, options).subscribe(
-      (response: UserAuth) => {
-        this.setSession(response);
-        this.router.navigateByUrl(this.returnUrl);
-      },
-      error => {
-        this.router.navigate(['/login']);
-      }
-    );
+    return this.httpClient.post(this.actionUrl, {}, options);
   }
 
-  private setSession(userAuth: UserAuth) {
+  public setSession(userAuth: UserAuth) {
     const decoded = JWT(userAuth.jwtToken);
     if (decoded === null) {
       // deal with null
