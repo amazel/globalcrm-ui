@@ -28,5 +28,5 @@ import {AppRouterModule} from '../app-router.module';
   ],
   providers: [ContactService]
 })
-export class ContactModule {
+export class ContactsModule {
 }
