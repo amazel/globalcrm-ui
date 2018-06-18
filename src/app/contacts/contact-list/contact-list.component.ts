@@ -1,9 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {Contact} from '../../model/contact.model';
 import {ContactService} from '../../services/contact.service';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs/internal/Subscription';
 import {ContactFilter} from '../contact-filter';
+import {PageChangedEvent} from 'ngx-bootstrap';
+import {ContactsFilterPipe} from '../contacts-filter.pipe';
+import {ContactListItemComponent} from './contact-list-item/contact-list-item.component';
 
 @Component({
   selector: 'app-contacts-list',
@@ -12,33 +15,64 @@ import {ContactFilter} from '../contact-filter';
 })
 export class ContactListComponent implements OnInit, OnDestroy {
 
+  @ViewChildren(ContactListItemComponent) contactItems: QueryList<ContactListItemComponent>;
   private subscription: Subscription;
-
+  selectAllCB = false;
+  currentPage;
+  itemsXPage = 5;
+  paginatedList: Contact[];
   contacts: Contact[];
+  filteredContacts: Contact[];
   contactFilter: ContactFilter;
 
-  constructor(private contactService: ContactService, private route: ActivatedRoute) {
+  constructor(private contactService: ContactService,
+              private route: ActivatedRoute,
+              private filterPipe: ContactsFilterPipe) {
     this.subscription = new Subscription();
-    this.subscription.add(this.contactService.filterSubject.subscribe(
-      (data: ContactFilter) => this.contactFilter = data
-    ));
+    this.currentPage = 1;
+  }
+
+  pageChanged(event: PageChangedEvent): void {
+    this.selectAllCB = false;
+    const startItem = (event.page - 1) * event.itemsPerPage;
+    const endItem = event.page * event.itemsPerPage;
+    this.paginatedList = this.contacts.slice(startItem, endItem);
   }
 
   ngOnInit() {
     this.subscription.add(this.contactService.getContacts('1').subscribe(
       (data: Contact[]) => {
         this.contacts = data;
+        this.filteredContacts = data;
+        this.paginatedList = this.contacts.slice(0, this.itemsXPage);
       },
       () => {
         console.log('ERROR');
-      },
-      () => {
-        console.log('COMPLETE! List size: ', this.contacts);
+      }
+    ));
+
+    this.subscription.add(this.contactService.filterSubject.subscribe(
+      (data: ContactFilter) => {
+        console.log('next filter', data);
+        this.contactFilter = data;
+        this.currentPage = 1;
+        if (this.contacts) {
+          this.filteredContacts = this.filterPipe.transform(this.contacts.slice(), data);
+          this.paginatedList = this.filteredContacts.slice(0, this.itemsXPage);
+        }
       }
     ));
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  selectAllChBx() {
+    console.log(this.selectAllCB);
+    this.selectAllCB = !this.selectAllCB;
+    this.contactItems.forEach(item => {
+      item.checked = this.selectAllCB;
+    });
   }
 }

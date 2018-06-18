@@ -4,7 +4,7 @@
       <div class="item-row">
         <div class="item-col fixed item-col-check">
           <label class="item-check" id="select-all-items">
-            <input type="checkbox" class="checkbox">
+            <input type="checkbox" class="checkbox" (click)="selectAllChBx()" [(checked)] = "selectAllCB">
             <span></span>
           </label>
         </div>
@@ -32,35 +32,15 @@
         <div class="item-col item-col-header fixed item-col-actions-dropdown"></div>
       </div>
     </li>
-
-
     <app-contact-list-item
-      *ngFor="let contactItem of contacts | contactsFilter:contactFilter "
+      *ngFor="let contactItem of paginatedList"
       [contact]="contactItem"></app-contact-list-item>
   </ul>
 </div>
-<nav class="text-right">
-  <ul class="pagination">
-    <li class="page-item">
-      <a class="page-link" href=""> Prev </a>
-    </li>
-    <li class="page-item active">
-      <a class="page-link" href=""> 1 </a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href=""> 2 </a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href=""> 3 </a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href=""> 4 </a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href=""> 5 </a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href=""> Next </a>
-    </li>
-  </ul>
-</nav>
+<pagination [totalItems]="filteredContacts?.length"
+            [itemsPerPage]="itemsXPage"
+            [(ngModel)]="currentPage"
+            (pageChanged)="pageChanged($event)">
+
+</pagination>
+

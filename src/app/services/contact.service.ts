@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {DataService} from './data.service';
-import {Subscription} from 'rxjs/internal/Subscription';
 import {Subject} from 'rxjs/internal/Subject';
 import {ContactFilter} from '../contacts/contact-filter';
 

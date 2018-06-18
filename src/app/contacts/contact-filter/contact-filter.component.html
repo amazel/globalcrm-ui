@@ -28,13 +28,20 @@
     <table>
       <tbody>
       <tr>
-        <td><input type="text" name="name" [(ngModel)]="filter.filter" placeholder="Filtrar"></td>
+        <td>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupPrepend"><i class="fa fa-filter"></i></span>
+            </div>
+            <input type="text" name="name" [(ngModel)]="filter.filter" placeholder="Filtrar">
+            <button class="btn btn-outline-primary align-self-start" (click)="onSearchClick($event)">Buscar</button>
+          </div>
+        </td>
       </tr>
       </tbody>
     </table>
   </div>
 </div>
-
 <div id="myModal" class="modal fade">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -44,13 +51,18 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body ">
-        <form [formGroup]="createContactForm" (ngSubmit)="createContact()">
+      <form [formGroup]="createContactForm" (ngSubmit)="createContact()">
+        <div class="modal-body ">
           <div class="row">
             <div class="col-6">
               <div class="form-group">
                 <label class="control-label">Nombre(s)</label>
-                <input formControlName="name" class="form-control form-control-sm boxed">
+                <input formControlName="name"
+                       class="form-control form-control-sm boxed"
+                       [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                  <div *ngIf="f.name.errors.required">El nombre es requerido</div>
+                </div>
               </div>
             </div>
             <div class="col-6">
@@ -131,7 +143,20 @@
             <div class="col-12">
               <div class="form-group">
                 <label class="control-label">Empresa</label>
-                <input formControlName="name" class="form-control form-control-sm boxed ">
+                <input formControlName="company"
+                       class="form-control form-control-sm boxed"
+                       [typeahead]="companies"
+                       typeaheadOptionField="name"
+                       typeaheadSingleWords="false"
+                       (typeaheadOnSelect)="onSelect($event)"
+                       (typeaheadNoResults)="onNoResult($event)"
+                       [ngClass]="{ 'is-invalid': submitted && f.company.errors }">
+                <div *ngIf="!selectedOption && f.company.value">
+                  <div class="info-label">*Se creará este cliente</div>
+                </div>
+                <div *ngIf="submitted && f.company.errors" class="invalid-feedback">
+                  <div *ngIf="f.company.errors.required">El Cliente es requerido</div>
+                </div>
 
               </div>
             </div>
@@ -144,23 +169,22 @@
               </div>
             </div>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <div class="row">
-          <div class="col">
-            <button type="submit" class="btn btn-primary"
-                    data-toggle="modal" data-target="#myModal">
-              Aceptar
-            </button>
-          </div>
-          <div class="col">
-            <button class="btn btn-dark " data-toggle="modal" data-target="#myModal" (click)="onModalClose()">
-              Cancelar
-            </button>
+        </div>
+        <div class="modal-footer">
+          <div class="row">
+            <div class="col">
+              <button type="submit" class="btn btn-primary">
+                Aceptar
+              </button>
+            </div>
+            <div class="col">
+              <button class="btn btn-dark " data-toggle="modal" data-target="#myModal" (click)="onModalClose()">
+                Cancelar
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>

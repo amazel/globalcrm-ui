@@ -2,14 +2,14 @@
   <div class="item-row">
     <div class="item-col fixed item-col-check">
       <label class="item-check" id="select-all-items">
-        <input type="checkbox" class="checkbox">
+        <input type="checkbox" class="checkbox" [(checked)] = 'checked'>
         <span></span>
       </label>
     </div>
 
     <div class="item-col fixed pull-left item-col-title">
       <div>
-        <a [routerLink]="['/contacts',contact.id]" (click)="onSelected()">
+        <a [routerLink]="['/contacts',contact.id]" class="list-item-link">
           <h6 class="item-title"> {{ contact.names }} {{contact.lastNames}}</h6>
         </a>
       </div>

@@ -9,7 +9,7 @@ import {ContactService} from '../../../services/contact.service';
 })
 export class ContactListItemComponent implements OnInit {
   @Input() contact: Contact;
-  clicked = false;
+  checked = false;
 
   constructor(private contactService: ContactService) {
   }
@@ -17,31 +17,28 @@ export class ContactListItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSelected() {
-  }
-
   getEmails(emails: Set<Email>) {
-    const list = new Set();
+    const list: any[] = [];
     for (const email of emails) {
-      list.add({
+      list.push({
           'type': 'fa fa-home',
           'value': email.email
         }
       );
     }
-    return list;
+    return list.slice(0, 1);
   }
 
   getPhones(phones: Set<Phone>) {
-    const list = new Set();
+    const list: any[] = [];
     for (const phone of phones) {
       // todo implement pills logic
-      list.add({
+      list.push({
           'type': 'fa fa-home',
           'value': phone.phone
         }
       );
     }
-    return list;
+    return list.slice(0, 1);
   }
 }

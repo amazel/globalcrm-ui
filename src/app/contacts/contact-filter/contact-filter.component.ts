@@ -1,10 +1,12 @@
 import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ContactFilter} from '../contact-filter';
 import {ContactService} from '../../services/contact.service';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CompanyService} from '../../services/company.service';
 import {PhoneType} from '../../model/phone-type.enum';
 import {EmailType} from '../../model/email-type.enum';
+import {Company} from '../../model/company.model';
+import {TypeaheadMatch} from 'ngx-bootstrap';
 
 declare var $: any;
 
@@ -13,17 +15,33 @@ declare var $: any;
   templateUrl: './contact-filter.component.html',
   styleUrls: ['./contact-filter.component.scss']
 })
-
-
 export class ContactFilterComponent implements OnInit, OnChanges {
 
   filter: ContactFilter = new ContactFilter();
   createContactForm: FormGroup;
+  companies: Company[];
+  selectedOption: any;
+  loading = false;
+  submitted = false;
 
   constructor(private contactService: ContactService,
               private companyService: CompanyService,
               private fb: FormBuilder) {
     this.createForm();
+
+    const c1: Company = new Company();
+    c1.id = 1;
+    c1.name = 'COMPANY A';
+
+    const c2: Company = new Company();
+    c2.id = 2;
+    c2.name = 'COMPANY B';
+
+    this.companies = [c1, c2];
+  }
+
+  get f() {
+    return this.createContactForm.controls;
   }
 
   ngOnInit() {
@@ -32,7 +50,7 @@ export class ContactFilterComponent implements OnInit, OnChanges {
 
   createForm() {
     this.createContactForm = this.fb.group({
-      name: '',
+      name: this.fb.control('', Validators.required),
       lastName: '',
       phoneArray: this.fb.array([this.fb.group({
           phone: this.fb.control(''),
@@ -43,17 +61,33 @@ export class ContactFilterComponent implements OnInit, OnChanges {
           email: this.fb.control(''),
           emailType: this.fb.control(EmailType[EmailType.WORK])
         }
-      )])
+      )]),
+      company: this.fb.control('', Validators.required)
     });
   }
 
   createContact() {
+    this.submitted = true;
+    if (this.createContactForm.invalid) {
+      return;
+    }
+    this.loading = true;
     const formModel = this.createContactForm.value;
     console.log(formModel.name);
     console.log(formModel.phoneArray);
     console.log(formModel.emailArray);
+    console.log(formModel.company);
+    this.onModalClose();
+    $('#myModal').modal('toggle');
   }
 
+  onSelect(event: TypeaheadMatch): void {
+    this.selectedOption = event.item;
+  }
+
+  onNoResult(event) {
+    this.selectedOption = null;
+  }
 
 // Phones
   setPhones(phones: Phone[]) {
@@ -128,6 +162,8 @@ export class ContactFilterComponent implements OnInit, OnChanges {
 
   onModalClose() {
     this.createForm();
+    this.loading = false;
+    this.submitted = false;
   }
 
 // -Modal
@@ -138,5 +174,9 @@ export class ContactFilterComponent implements OnInit, OnChanges {
 
   rebuildForm() {
     this.createContactForm.reset();
+  }
+
+  onSearchClick(event) {
+    this.contactService.filterSubject.next(this.filter);
   }
 }

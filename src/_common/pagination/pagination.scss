@@ -1,20 +1,42 @@
 .pagination {
-	margin-top: 0;
-	display: inline-flex;
+  margin-top: 0;
+  display: inline-flex;
 
-	.page-item {
-		.page-link {
-			color: $color-primary;
-		}
+  .pagination-page.page-item {
+    .page-link {
+      color: $color-primary;
+    }
 
-		&.active {
-			.page-link,
-			.page-link:focus,
-			.page-link:hover {
-				color: #fff;
-				border-color: $color-primary;
-				background-color: $color-primary;
-			}
-		}
-	}
+    &.active {
+      .page-link,
+      .page-link:focus,
+      .page-link:hover {
+        color: #fff;
+        border-color: $color-primary;
+        background-color: $color-primary;
+      }
+    }
+  }
+  .pagination-prev.page-item.disabled {
+    .page-link {
+      color: $color-text-passive
+    }
+  }
+
+  .pagination-prev.page-item {
+    .page-link {
+      color: $color-primary;
+    }
+  }
+
+  .pagination-next.page-item.disabled {
+    .page-link {
+      color: $color-text-passive
+    }
+  }
+  .pagination-next.page-item {
+    .page-link {
+      color: $color-primary;
+    }
+  }
 }

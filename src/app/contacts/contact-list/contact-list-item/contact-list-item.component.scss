@@ -1,9 +1,4 @@
-@import '../../../../_main';
-@import '../../../app.component';
-@import '../../../../_common/items-list/items-list';
 @import '../../contact-filter/contact-filter.component';
-@import '../../../../_common/form/form';
-@import '../../../../_common/button/button';
 
 ul {
   list-style: none;
@@ -15,7 +10,10 @@ a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus {
   text-decoration: none;
 }
 
-
 .item-row {
   padding: 0 20px;
+}
+
+.list-item-link{
+  color: $sidebar-color-primary;
 }
