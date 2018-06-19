@@ -45,6 +45,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
         this.contacts = data;
         this.filteredContacts = data;
         this.paginatedList = this.contacts.slice(0, this.itemsXPage);
+        console.log(this.contacts);
+        this.currentPage = 1;
       },
       () => {
         console.log('ERROR');
@@ -55,11 +57,29 @@ export class ContactListComponent implements OnInit, OnDestroy {
       (data: ContactFilter) => {
         console.log('next filter', data);
         this.contactFilter = data;
-        this.currentPage = 1;
         if (this.contacts) {
           this.filteredContacts = this.filterPipe.transform(this.contacts.slice(), data);
           this.paginatedList = this.filteredContacts.slice(0, this.itemsXPage);
         }
+        setTimeout(() => {
+          this.currentPage = 1;
+        });
+      }
+    ));
+    this.subscription.add(this.contactService.deletedContact.subscribe(
+      id => {
+        for (const [_i, contact] of this.contacts.entries()) {
+          if (contact.id === id) {
+            console.log('removing contact from array', id, 'index', _i);
+            this.contacts.splice(_i, 1);
+            this.filteredContacts = this.contacts;
+            this.paginatedList = this.contacts.slice(0, this.itemsXPage);
+            break;
+          }
+        }
+        setTimeout(() => {
+          this.currentPage = 1;
+        });
       }
     ));
   }
@@ -75,4 +95,5 @@ export class ContactListComponent implements OnInit, OnDestroy {
       item.checked = this.selectAllCB;
     });
   }
+
 }

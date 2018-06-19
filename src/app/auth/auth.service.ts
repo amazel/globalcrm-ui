@@ -26,16 +26,17 @@ export class AuthService implements OnInit, OnDestroy {
   }
 
   public login(email: string, password: string) {
-
+    console.log('login');
+    const userAuth: UserAuth = new UserAuth();
+    userAuth.email = email;
+    userAuth.password = password;
     const options = {
-      params: new HttpParams()
-        .set('email', email)
-        .set('password', password),
+      params: new HttpParams(),
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
     };
-    return this.httpClient.post(this.actionUrl, {}, options);
+    return this.httpClient.post(this.actionUrl, userAuth, options);
   }
 
   public setSession(userAuth: UserAuth) {

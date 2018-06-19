@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Contact} from '../../../model/contact.model';
 import {ContactService} from '../../../services/contact.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-contact-list-item',
@@ -10,8 +11,10 @@ import {ContactService} from '../../../services/contact.service';
 export class ContactListItemComponent implements OnInit {
   @Input() contact: Contact;
   checked = false;
+  toolClicked = false;
 
-  constructor(private contactService: ContactService) {
+  constructor(private contactService: ContactService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -40,5 +43,20 @@ export class ContactListItemComponent implements OnInit {
       );
     }
     return list.slice(0, 1);
+  }
+
+  deleteContact(id) {
+    this.toolClicked = false;
+    this.contactService.deleteContact(id).subscribe(
+      value => {
+        console.log(id, 'deleted');
+        this.contactService.deletedContact.next(id);
+      },
+      error1 => console.error(error1)
+    );
+  }
+
+  onToolClick() {
+    this.toolClicked = !this.toolClicked;
   }
 }

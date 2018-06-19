@@ -9,7 +9,7 @@ import {ContactsFilterPipe} from './contacts-filter.pipe';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ContactService} from '../services/contact.service';
 import {AppRouterModule} from '../app-router.module';
-import {PaginationModule, TypeaheadModule} from 'ngx-bootstrap';
+import {ModalModule, PaginationModule, TypeaheadModule} from 'ngx-bootstrap';
 
 
 @NgModule({
@@ -27,7 +27,8 @@ import {PaginationModule, TypeaheadModule} from 'ngx-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     TypeaheadModule.forRoot(),
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [ContactService,
     ContactsFilterPipe]

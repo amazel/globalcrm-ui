@@ -45,9 +45,11 @@ export class DataService {
   //     .put<T>(this.actionUrl + id, JSON.stringify(itemToUpdate));
   // }
   //
-  // public delete<T>(id: number): Observable<T> {
-  //   return this.http.delete<T>(this.actionUrl + id);
-  // }
+  public delete<T>(id: number): Observable<T> {
+
+    return this.http.delete<T>(this.actionUrl + '/' + id);
+  }
+
   private getOptions(params?: Map<String, String>) {
 
     console.log(params);
