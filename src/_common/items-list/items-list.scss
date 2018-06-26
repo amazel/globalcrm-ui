@@ -347,6 +347,9 @@ $item-list-col-shrink: 3 !default;
 					padding: 0 5px;
 
 					&.edit {
+            :hover{
+              cursor: pointer;
+            }
 						color: #38424C;
 					}
 
@@ -355,6 +358,9 @@ $item-list-col-shrink: 3 !default;
 					}
 
 					&.remove {
+            :hover{
+              cursor: pointer;
+            }
 						color: #DB0E1E;
 					}
 				}

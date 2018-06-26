@@ -45,7 +45,7 @@ export class ContactFilterComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.contactService.filterSubject.next(this.filter);
+    this.contactService.$filterSubject.next(this.filter);
   }
 
   createForm() {
@@ -177,6 +177,10 @@ export class ContactFilterComponent implements OnInit, OnChanges {
   }
 
   onSearchClick(event) {
-    this.contactService.filterSubject.next(this.filter);
+    this.contactService.$filterSubject.next(this.filter);
+  }
+
+  deleteContactList() {
+    this.contactService.$deleteContacts.next('');
   }
 }

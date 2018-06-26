@@ -7,6 +7,7 @@ import {ContactFilter} from '../contact-filter';
 import {PageChangedEvent} from 'ngx-bootstrap';
 import {ContactsFilterPipe} from '../contacts-filter.pipe';
 import {ContactListItemComponent} from './contact-list-item/contact-list-item.component';
+import {session} from '../../session';
 
 @Component({
   selector: 'app-contacts-list',
@@ -24,6 +25,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
   contacts: Contact[];
   filteredContacts: Contact[];
   contactFilter: ContactFilter;
+  isContactDeleted = false;
 
   constructor(private contactService: ContactService,
               private route: ActivatedRoute,
@@ -40,7 +42,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription.add(this.contactService.getContacts('1').subscribe(
+    this.subscription.add(this.contactService.getContacts(localStorage.getItem(session.accountIdSession)).subscribe(
       (data: Contact[]) => {
         this.contacts = data;
         this.filteredContacts = data;
@@ -53,7 +55,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
       }
     ));
 
-    this.subscription.add(this.contactService.filterSubject.subscribe(
+    this.subscription.add(this.contactService.$filterSubject.subscribe(
       (data: ContactFilter) => {
         console.log('next filter', data);
         this.contactFilter = data;
@@ -63,22 +65,51 @@ export class ContactListComponent implements OnInit, OnDestroy {
         }
         setTimeout(() => {
           this.currentPage = 1;
+          this.selectAllChBx(false);
         });
       }
     ));
-    this.subscription.add(this.contactService.deletedContact.subscribe(
+    this.subscription.add(this.contactService.$deletedContact.subscribe(
       id => {
-        for (const [_i, contact] of this.contacts.entries()) {
-          if (contact.id === id) {
-            console.log('removing contact from array', id, 'index', _i);
-            this.contacts.splice(_i, 1);
-            this.filteredContacts = this.contacts;
-            this.paginatedList = this.contacts.slice(0, this.itemsXPage);
-            break;
+        if (id) {
+          for (const [_i, contact] of this.contacts.entries()) {
+            if (contact.id === id) {
+              this.contacts.splice(_i, 1);
+              this.filteredContacts = this.contacts;
+              this.paginatedList = this.contacts.slice(0, this.itemsXPage);
+              break;
+            }
           }
         }
+        this.isContactDeleted = true;
+        setTimeout(() => {
+          this.isContactDeleted = false;
+        }, 5000);
         setTimeout(() => {
           this.currentPage = 1;
+          this.selectAllChBx(false);
+        });
+      }
+    ));
+    this.subscription.add(this.contactService.$deleteContacts.subscribe(
+      value => {
+        const result = this.contactItems
+          .filter(item => item.selectedCB.value === true)
+          .map(value1 => value1.contact.id);
+        this.contactService.deleteContactList(result);
+
+        for (const id of result) {
+          for (const [_i, contact] of this.contacts.entries()) {
+            if (contact.id === id) {
+              this.contacts.splice(_i, 1);
+              break;
+            }
+          }
+        }
+        this.filteredContacts = this.contacts;
+        this.paginatedList = this.contacts.slice(0, this.itemsXPage);
+        setTimeout(() => {
+          this.selectAllChBx(false);
         });
       }
     ));
@@ -88,12 +119,12 @@ export class ContactListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  selectAllChBx() {
-    console.log(this.selectAllCB);
-    this.selectAllCB = !this.selectAllCB;
+  selectAllChBx(newValue: boolean) {
+    console.log('selectAllChBx', newValue);
+    this.selectAllCB = newValue;
     this.contactItems.forEach(item => {
-      item.checked = this.selectAllCB;
+      item.checked = newValue;
     });
   }
-
 }
+

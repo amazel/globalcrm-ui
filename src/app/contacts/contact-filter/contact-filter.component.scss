@@ -363,3 +363,7 @@ a:not([href]):hover, a:not([href]):focus {
     }
   }
 }
+
+.dropdown-item{
+  cursor: pointer;
+}

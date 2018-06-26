@@ -24,7 +24,6 @@ export class DataService {
   public getSingle<T>(id: number, params?: Map<String, String>): Observable<T> {
 
     const options = this.getOptions(params);
-
     return this.http.get<T>(this.actionUrl + '/' + id, options)
       .pipe(
         catchError(this.handleError)

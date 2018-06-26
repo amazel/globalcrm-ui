@@ -4,20 +4,22 @@ import {DataService} from './data.service';
 import {Subject} from 'rxjs/internal/Subject';
 import {ContactFilter} from '../contacts/contact-filter';
 import {Contact} from '../model/contact.model';
-import {Observable} from 'rxjs/internal/Observable';
+import {session} from '../session';
 
 
 @Injectable()
 export class ContactService {
 
-  filterSubject: Subject<ContactFilter>;
-  deletedContact: Subject<number>;
+  $filterSubject: Subject<ContactFilter>;
+  $deletedContact: Subject<number>;
+  $deleteContacts: Subject<string>;
   actionUrl: string;
 
   constructor(private dataService: DataService) {
     this.actionUrl = environment.apiUrl + '/contacts';
-    this.filterSubject = new Subject<ContactFilter>();
-    this.deletedContact = new Subject<number>();
+    this.$filterSubject = new Subject<ContactFilter>();
+    this.$deletedContact = new Subject<number>();
+    this.$deleteContacts = new Subject<string>();
   }
 
   getContacts(accountId: string) {
@@ -31,7 +33,7 @@ export class ContactService {
     this.dataService.actionUrl = this.actionUrl;
     console.log('Getting contact: ' + id);
     const params = new Map<String, String>();
-    params.set('userId', '1');
+    params.set('userId', localStorage.getItem(session.userIdSession));
     return this.dataService.getSingle(id, params);
   }
 
@@ -39,5 +41,13 @@ export class ContactService {
     console.log('deleting contact', id);
     this.dataService.actionUrl = this.actionUrl;
     return this.dataService.delete<Contact>(id);
+  }
+
+  deleteContactList(result: number[]) {
+    result.forEach(value => this.deleteContact(value).subscribe(
+      value1 => console.log(value1),
+      error1 => console.error(error1)
+    ));
+    this.$deletedContact.next(null);
   }
 }

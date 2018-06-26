@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Contact} from '../../../model/contact.model';
 import {ContactService} from '../../../services/contact.service';
-import {Router} from '@angular/router';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-contact-list-item',
@@ -12,9 +12,10 @@ export class ContactListItemComponent implements OnInit {
   @Input() contact: Contact;
   checked = false;
   toolClicked = false;
+  selectedCB: FormControl;
 
-  constructor(private contactService: ContactService,
-              private router: Router) {
+  constructor(private contactService: ContactService) {
+    this.selectedCB = new FormControl(false);
   }
 
   ngOnInit() {
@@ -50,7 +51,7 @@ export class ContactListItemComponent implements OnInit {
     this.contactService.deleteContact(id).subscribe(
       value => {
         console.log(id, 'deleted');
-        this.contactService.deletedContact.next(id);
+        this.contactService.$deletedContact.next(id);
       },
       error1 => console.error(error1)
     );

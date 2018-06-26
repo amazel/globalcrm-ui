@@ -5,13 +5,11 @@ import {UserAuth} from '../model/user-auth.model';
 import * as JWT from 'jwt-decode';
 import {environment} from '../../environments/environment';
 import {Subscription} from 'rxjs/internal/Subscription';
+import {session} from '../session';
 
 @Injectable()
 export class AuthService implements OnInit, OnDestroy {
   private actionUrl: string;
-  private userIdSession = 'userId';
-  private accountIdSession = 'accountId';
-  private tokenSession = 'token';
   private httpSubscription: Subscription;
 
   constructor(
@@ -45,9 +43,9 @@ export class AuthService implements OnInit, OnDestroy {
       // deal with null
     }
     const decodedJWT = (decoded as any);
-    localStorage.setItem(this.tokenSession, userAuth.jwtToken);
-    localStorage.setItem(this.accountIdSession, userAuth.accountId.toString());
-    localStorage.setItem(this.userIdSession, decodedJWT.uid);
+    localStorage.setItem(session.tokenSession, userAuth.jwtToken);
+    localStorage.setItem(session.accountIdSession, userAuth.accountId.toString());
+    localStorage.setItem(session.userIdSession, decodedJWT.uid);
   }
 
   private getTokenExpirationDate(token): Date {
@@ -61,13 +59,13 @@ export class AuthService implements OnInit, OnDestroy {
   }
 
   public logout() {
-    localStorage.removeItem(this.tokenSession);
-    localStorage.removeItem(this.userIdSession);
-    localStorage.removeItem(this.accountIdSession);
+    localStorage.removeItem(session.tokenSession);
+    localStorage.removeItem(session.userIdSession);
+    localStorage.removeItem(session.accountIdSession);
   }
 
   public isAuthenticated() {
-    const token = localStorage.getItem(this.tokenSession);
+    const token = localStorage.getItem(session.tokenSession);
     return token != null && !this.isTokenExpired(token);
   }
 
