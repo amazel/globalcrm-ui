@@ -1,0 +1,120 @@
+<article class="content">
+  <form *ngIf="currentContact | async; else loading" [formGroup]="updateContactForm" (ngSubmit)="createContact()">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label class="control-label">Nombre(s)</label>
+          <input formControlName="names"
+                 class="form-control form-control-sm boxed"
+                 [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">El nombre es requerido</div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label class="control-label">Apellido(s)</label>
+          <input formControlName="lastNames"
+                 class="form-control form-control-sm boxed">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div formArrayName="phones">
+          <label class="control-label ">Telefono(s)</label>
+          <div class="scrollable">
+            <div *ngFor="let phone of phones.controls; let i=index" [formGroupName]="i">
+              <div class="row  align-items-center justify-content-between">
+                <!-- The repeated phone template -->
+                <div class="col-6">
+                  <div class="form-group">
+                    <input class="form-control form-control-sm boxed" formControlName="phone">
+                  </div>
+                </div>
+                <div class="col-5 ">
+                  <div class="form-group">
+                    <select class="form-control form-control-sm boxed" formControlName="phoneType">
+                      <option *ngFor="let type of phoneTypeKeys()" [ngValue]="type">{{type}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-1  align-self-start">
+                  <a (click)="removePhoneFormControl(i)" class="trash-link">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group"><a (click)="addPhoneFormControl()" class="trash-link">
+            <i class="fa fa-plus"></i><i class="fa fa-phone"></i>
+          </a></div>
+          <!-- End of the repeated phone template -->
+        </div>
+      </div>
+      <!--</div>-->
+      <!--<div class="row">-->
+      <div class="col">
+        <div formArrayName="emails">
+          <label class="control-label">Correo(s) Electronico(s)</label>
+          <div class="scrollable">
+            <div *ngFor="let email of emails.controls; let i=index" [formGroupName]="i">
+              <div class="row align-items-center justify-content-between">
+                <!-- The repeated email template -->
+                <div class="col-6">
+                  <div class="form-group">
+                    <input class="form-control form-control-sm boxed" formControlName="email">
+                  </div>
+                </div>
+                <div class="col-5">
+                  <div class="form-group">
+                    <select class="form-control form-control-sm boxed" formControlName="emailType">
+                      <option *ngFor="let type of emailTypeKeys()" [ngValue]="type">{{type}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-1 align-self-start">
+                  <a (click)="removeEmailFormControl(i)" class="trash-link">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <a (click)="addEmailFormControl()" class="trash-link">
+              <i class="fa fa-plus"></i><i class="fa fa-envelope"></i>
+            </a></div>
+          <!-- End of the repeated email template -->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group" formGroupName="company">
+          <label class="control-label">Empresa</label>
+          <input formControlName="name"
+                 class="form-control form-control-sm boxed"
+                 [typeahead]="companies"
+                 typeaheadOptionField="name"
+                 typeaheadSingleWords="false"
+                 (typeaheadOnSelect)="onSelect($event)"
+                 (typeaheadNoResults)="onNoResult($event)"
+                 [ngClass]="{ 'is-invalid': submitted && company.controls['name'].errors }">
+          <div *ngIf="!selectedOption && company.controls['name'].value && company.controls['name'].dirty">
+            <div class="info-label">*Se creará este cliente</div>
+          </div>
+          <div *ngIf="submitted && company.controls['name'].errors" class="invalid-feedback">
+            <div *ngIf="f.company.errors.required">El Cliente es requerido</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <ng-template #loading>
+    Loading User...
+  </ng-template>
+</article>

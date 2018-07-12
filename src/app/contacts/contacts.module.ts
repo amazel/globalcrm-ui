@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ContactService} from '../services/contact.service';
 import {AppRouterModule} from '../app-router.module';
 import {ModalModule, PaginationModule, TypeaheadModule} from 'ngx-bootstrap';
+import { ContactEditComponent } from './contact-edit/contact-edit.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {ModalModule, PaginationModule, TypeaheadModule} from 'ngx-bootstrap';
     ContactFilterComponent,
     ContactDetailComponent,
     ContactListItemComponent,
-    ContactsFilterPipe
+    ContactsFilterPipe,
+    ContactEditComponent
   ],
   imports: [
     AppRouterModule,

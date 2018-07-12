@@ -1,0 +1,22 @@
+@import '../../app.component';
+
+.scrollable {
+  max-height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+a:not([href]).trash-link {
+  color: lighten($color-text-light, 10);
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  line-height: 30px;
+  text-align: center;
+  text-decoration: none;
+}
+
+a:not([href]):hover, a:not([href]):focus {
+  color: $color-primary;
+  text-decoration: none;
+}

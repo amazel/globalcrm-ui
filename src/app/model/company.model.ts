@@ -1,6 +1,6 @@
-import {VisibleFor} from "./visible-for.enum";
-import {Contact} from "./contact.model";
-import {Account} from "./account.model";
+import {VisibleFor} from './visible-for.enum';
+import {Contact} from './contact.model';
+import {Account} from './account.model';
 
 export class Company {
   public id: number;
@@ -12,5 +12,5 @@ export class Company {
   public city: string;
   public state: string;
   public visibleFor: VisibleFor;
-  public contacts = new Set<Contact>();
+  public contacts: Contact[];
 }

@@ -7,6 +7,11 @@ import {PhoneType} from '../../model/phone-type.enum';
 import {EmailType} from '../../model/email-type.enum';
 import {Company} from '../../model/company.model';
 import {TypeaheadMatch} from 'ngx-bootstrap';
+import {Subscription} from 'rxjs/internal/Subscription';
+import {session} from '../../session';
+import {VisibleFor} from '../../model/visible-for.enum';
+import {Contact} from '../../model/contact.model';
+import {ContactType} from '../../model/contact-type.enum';
 
 declare var $: any;
 
@@ -18,6 +23,7 @@ declare var $: any;
 export class ContactFilterComponent implements OnInit, OnChanges {
 
   filter: ContactFilter = new ContactFilter();
+  subscription: Subscription;
   createContactForm: FormGroup;
   companies: Company[];
   selectedOption: any;
@@ -27,17 +33,8 @@ export class ContactFilterComponent implements OnInit, OnChanges {
   constructor(private contactService: ContactService,
               private companyService: CompanyService,
               private fb: FormBuilder) {
-    this.createForm();
-
-    const c1: Company = new Company();
-    c1.id = 1;
-    c1.name = 'COMPANY A';
-
-    const c2: Company = new Company();
-    c2.id = 2;
-    c2.name = 'COMPANY B';
-
-    this.companies = [c1, c2];
+    this.createForm(fb);
+    this.subscription = new Subscription();
   }
 
   get f() {
@@ -46,23 +43,28 @@ export class ContactFilterComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.contactService.$filterSubject.next(this.filter);
+    this.subscription.add(
+      this.companyService.getCompanies(localStorage.getItem(session.accountIdSession))
+        .subscribe(
+          data => this.companies = data
+        ));
   }
 
-  createForm() {
-    this.createContactForm = this.fb.group({
-      name: this.fb.control('', Validators.required),
+  createForm(fb: FormBuilder) {
+    this.createContactForm = fb.group({
+      name: fb.control('', Validators.required),
       lastName: '',
-      phoneArray: this.fb.array([this.fb.group({
-          phone: this.fb.control(''),
-          phoneType: this.fb.control(PhoneType[PhoneType.WORK])
+      phoneArray: fb.array([fb.group({
+          phone: fb.control(''),
+          phoneType: fb.control(PhoneType[PhoneType.WORK])
         }
       )]),
-      emailArray: this.fb.array([this.fb.group({
-          email: this.fb.control(''),
-          emailType: this.fb.control(EmailType[EmailType.WORK])
+      emailArray: fb.array([fb.group({
+          email: fb.control(''),
+          emailType: fb.control(EmailType[EmailType.WORK])
         }
       )]),
-      company: this.fb.control('', Validators.required)
+      company: fb.control('', Validators.required)
     });
   }
 
@@ -77,6 +79,38 @@ export class ContactFilterComponent implements OnInit, OnChanges {
     console.log(formModel.phoneArray);
     console.log(formModel.emailArray);
     console.log(formModel.company);
+    console.log(this.selectedOption);
+
+    const newContact = new Contact();
+    newContact.emails = formModel.emailArray;
+    newContact.lastNames = formModel.lastName;
+    newContact.names = formModel.name;
+    newContact.phones = formModel.phoneArray;
+    newContact.contactType = ContactType.PROSPECT;
+    newContact.visibleFor = VisibleFor[VisibleFor.ALL];
+
+    if (!this.selectedOption) {
+      const newCompany = new Company();
+      newCompany.name = formModel.company;
+      newCompany.visibleFor = VisibleFor[VisibleFor.ALL];
+      this.companyService.createCompany(newCompany, localStorage.getItem(session.accountIdSession))
+        .subscribe(value => {
+          this.contactService.createContact(
+            newContact,
+            localStorage.getItem(session.accountIdSession),
+            value.id,
+            localStorage.getItem(session.userIdSession));
+        });
+    } else {
+      this.contactService.createContact(
+        newContact,
+        localStorage.getItem(session.accountIdSession),
+        this.selectedOption.id,
+        localStorage.getItem(session.userIdSession)).subscribe(
+        value => console.log('SAVED:', value),
+        error1 => console.error(error1)
+      );
+    }
     this.onModalClose();
     $('#myModal').modal('toggle');
   }
@@ -161,7 +195,7 @@ export class ContactFilterComponent implements OnInit, OnChanges {
 // - Emails
 
   onModalClose() {
-    this.createForm();
+    this.createForm(this.fb);
     this.loading = false;
     this.submitted = false;
   }

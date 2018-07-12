@@ -9,6 +9,7 @@ import {ContactDetailComponent} from './contacts/contact-detail/contact-detail.c
 import {AuthGuard} from './auth/auth-guard.service';
 import {LayoutComponent} from './layout/layout.component';
 import {LoginComponent} from './auth/login/login.component';
+import {ContactEditComponent} from './contacts/contact-edit/contact-edit.component';
 
 export const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -18,6 +19,7 @@ export const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
       {path: 'sales', component: SalesComponent, canActivate: [AuthGuard]},
       {path: 'contacts', component: ContactsComponent, canActivate: [AuthGuard]},
+      {path: 'contacts/:id/edit', component: ContactEditComponent, canActivate: [AuthGuard]},
       {path: 'contacts/:id', component: ContactDetailComponent, canActivate: [AuthGuard]},
       {path: 'companies', component: CompaniesComponent, canActivate: [AuthGuard]},
       {path: 'tasks', component: TasksComponent, canActivate: [AuthGuard]}

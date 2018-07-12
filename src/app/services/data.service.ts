@@ -32,10 +32,9 @@ export class DataService {
 
   public save<T>(item: T, params?: Map<String, String>): Observable<T> {
     const json = JSON.stringify(item);
-
     const options = this.getOptions(params);
-
-    return this.http.post<T>(this.actionUrl + '/new', json);
+    console.log(json);
+    return this.http.post<T>(this.actionUrl + '/new', json, options);
   }
 
   //
@@ -43,7 +42,7 @@ export class DataService {
   //   return this.http
   //     .put<T>(this.actionUrl + id, JSON.stringify(itemToUpdate));
   // }
-  //
+
   public delete<T>(id: number): Observable<T> {
 
     return this.http.delete<T>(this.actionUrl + '/' + id);

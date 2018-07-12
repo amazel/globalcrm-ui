@@ -17,8 +17,8 @@ export class Contact {
   public createdBy: User;
 
   public contactType: ContactType;
-  public phones: Set<Phone> = new Set();
-  public emails: Set<Email> = new Set();
+  public phones: Phone[];
+  public emails: Email[];
   public company: Company;
   public visibleFor: VisibleFor;
   public sales: Set<Sale>;

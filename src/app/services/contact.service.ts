@@ -34,7 +34,7 @@ export class ContactService {
     console.log('Getting contact: ' + id);
     const params = new Map<String, String>();
     params.set('userId', localStorage.getItem(session.userIdSession));
-    return this.dataService.getSingle(id, params);
+    return this.dataService.getSingle<Contact>(id, params);
   }
 
   deleteContact(id: number) {
@@ -49,5 +49,14 @@ export class ContactService {
       error1 => console.error(error1)
     ));
     this.$deletedContact.next(null);
+  }
+
+  createContact(contact: Contact, accountId, companyId, userId) {
+    console.log('creating Contact', contact, accountId, companyId, userId);
+    const params = new Map<String, String>();
+    params.set('accountId', accountId);
+    params.set('companyId', companyId);
+    params.set('userId', userId);
+    return this.dataService.save<Contact>(contact, params);
   }
 }
