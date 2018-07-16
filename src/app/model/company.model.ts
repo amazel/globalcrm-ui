@@ -11,6 +11,6 @@ export class Company {
   public zipCode: string;
   public city: string;
   public state: string;
-  public visibleFor: VisibleFor;
+  public visibleFor: string;
   public contacts: Contact[];
 }

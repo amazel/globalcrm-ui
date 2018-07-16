@@ -42,7 +42,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription.add(this.contactService.getContacts(localStorage.getItem(session.accountIdSession)).subscribe(
+    this.subscription.add(
+      this.contactService.getContacts(localStorage.getItem(session.accountIdSession)).subscribe(
       (data: Contact[]) => {
         this.contacts = data;
         this.filteredContacts = data;

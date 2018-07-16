@@ -44,6 +44,7 @@ export class ContactService {
   }
 
   deleteContactList(result: number[]) {
+    this.dataService.actionUrl = this.actionUrl;
     result.forEach(value => this.deleteContact(value).subscribe(
       value1 => console.log(value1),
       error1 => console.error(error1)
@@ -52,6 +53,7 @@ export class ContactService {
   }
 
   createContact(contact: Contact, accountId, companyId, userId) {
+    this.dataService.actionUrl = this.actionUrl;
     console.log('creating Contact', contact, accountId, companyId, userId);
     const params = new Map<String, String>();
     params.set('accountId', accountId);

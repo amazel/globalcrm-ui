@@ -20,6 +20,6 @@ export class Contact {
   public phones: Phone[];
   public emails: Email[];
   public company: Company;
-  public visibleFor: VisibleFor;
+  public visibleFor: string;
   public sales: Set<Sale>;
 }

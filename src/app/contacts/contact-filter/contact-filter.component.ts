@@ -99,7 +99,10 @@ export class ContactFilterComponent implements OnInit, OnChanges {
             newContact,
             localStorage.getItem(session.accountIdSession),
             value.id,
-            localStorage.getItem(session.userIdSession));
+            localStorage.getItem(session.userIdSession)).subscribe(
+            value1 => console.log('SAVED:', value1),
+            error1 => console.error(error1)
+          );
         });
     } else {
       this.contactService.createContact(
@@ -111,6 +114,7 @@ export class ContactFilterComponent implements OnInit, OnChanges {
         error1 => console.error(error1)
       );
     }
+    this.contactService.
     this.onModalClose();
     $('#myModal').modal('toggle');
   }
