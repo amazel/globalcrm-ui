@@ -3,6 +3,8 @@ import {Contact} from '../../model/contact.model';
 import {ContactService} from '../../services/contact.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import {Subscription} from 'rxjs/internal/Subscription';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-contact-detail',
@@ -12,13 +14,12 @@ import {Subscription} from 'rxjs/internal/Subscription';
 export class ContactDetailComponent implements OnInit, OnDestroy {
 
   private paramSubscription: Subscription;
-  private serviceSubscription: Subscription;
 
-  currentContact: Contact;
+  currentContact: Observable<Contact>;
   id: number;
 
-  constructor(private contactService: ContactService, private route: ActivatedRoute) {
-
+  constructor(private contactService: ContactService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -26,17 +27,16 @@ export class ContactDetailComponent implements OnInit, OnDestroy {
       .subscribe(
         (params: Params) => {
           this.id = +params['id'];
-          this.serviceSubscription = this.contactService.getContact(this.id)
-            .subscribe(
-              (data: Contact) => this.currentContact = data
-            );
+          this.contactService.getContact(this.id);
+          this.currentContact = this.contactService.contacts.pipe(
+            map(contacts => contacts.find(item => item.id === this.id))
+          );
+
         }
       );
   }
 
   ngOnDestroy(): void {
     this.paramSubscription.unsubscribe();
-    this.serviceSubscription.unsubscribe();
   }
-
 }

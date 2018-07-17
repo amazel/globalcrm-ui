@@ -4,12 +4,12 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {Contact} from '../../model/contact.model';
 import {Subscription} from 'rxjs/internal/Subscription';
 import {ContactService} from '../../services/contact.service';
-import {Observable} from 'rxjs/internal/Observable';
-import {tap} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {EmailType} from '../../model/email-type.enum';
 import {PhoneType} from '../../model/phone-type.enum';
 import {TypeaheadMatch} from 'ngx-bootstrap';
 import {Company} from '../../model/company.model';
+import {Observable} from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-contact-edit',
@@ -69,22 +69,25 @@ export class ContactEditComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.subscription.add(this.route.params
       .subscribe(
         (params: Params) => {
           const id = +params['id'];
-          this.currentContact = this.contactService.getContact(id)
-            .pipe(
-              tap(contact => {
-
-                this.updateContactForm.patchValue(contact);
-                this.updateContactForm.controls['phones'] = this.fb.array(contact.phones.map(i => this.fb.group(i)));
-                this.updateContactForm.controls['emails'] = this.fb.array(contact.emails.map(i => this.fb.group(i)));
-
-
-              }));
+          this.contactService.getContact(id);
+          this.currentContact = this.contactService.contacts.pipe(
+            map(contacts => contacts.find(item => item.id === id)),
+            tap(
+              x => {
+                this.updateContactForm.patchValue(x);
+                this.updateContactForm.controls['phones'] = this.fb.array(x.phones.map(i => this.fb.group(i)));
+                this.updateContactForm.controls['emails'] = this.fb.array(x.emails.map(i => this.fb.group(i)));
+              }
+            )
+          );
         }
-      ));
+      )
+    );
   }
 
   get f() {

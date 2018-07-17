@@ -48,13 +48,7 @@ export class ContactListItemComponent implements OnInit {
 
   deleteContact(id) {
     this.toolClicked = false;
-    this.contactService.deleteContact(id).subscribe(
-      value => {
-        console.log(id, 'deleted');
-        this.contactService.$deletedContact.next(id);
-      },
-      error1 => console.error(error1)
-    );
+    this.contactService.deleteContact(id);
   }
 
   onToolClick() {

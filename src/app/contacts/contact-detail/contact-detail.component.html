@@ -1,17 +1,22 @@
 <article class="content">
-  <div class="row">
-    <div class="col-4">
-      <div class="card">
-        <div class="card-header">
-          <h4>{{currentContact?.names}} {{currentContact?.lastNames}}</h4>
-          <small>{{currentContact?.company.name}}</small>
-        </div>
-        <div class="card-body">
-          Holi de bebes
+  <div *ngIf="currentContact | async as contact; else loading">
+    <div class="row">
+      <div class="col-4">
+        <div class="card">
+          <div class="card-header">
+            <h4>{{contact.name}} {{contact.lastNames}}</h4>
+            <small>{{contact.company.name}}</small>
+          </div>
+          <div class="card-body">
+            Holi de bebes
+          </div>
         </div>
       </div>
+      <div class="col-8"></div>
     </div>
-    <div class="col-8"></div>
   </div>
+  <ng-template #loading>
+    Loading stuff...
+  </ng-template>
 </article>
 <!--<th scope="row">{{currentContact?.id}}</th>-->

@@ -99,22 +99,16 @@ export class ContactFilterComponent implements OnInit, OnChanges {
             newContact,
             localStorage.getItem(session.accountIdSession),
             value.id,
-            localStorage.getItem(session.userIdSession)).subscribe(
-            value1 => console.log('SAVED:', value1),
-            error1 => console.error(error1)
-          );
+            localStorage.getItem(session.userIdSession));
         });
     } else {
       this.contactService.createContact(
         newContact,
         localStorage.getItem(session.accountIdSession),
         this.selectedOption.id,
-        localStorage.getItem(session.userIdSession)).subscribe(
-        value => console.log('SAVED:', value),
-        error1 => console.error(error1)
-      );
+        localStorage.getItem(session.userIdSession));
     }
-    this.contactService.
+    // this.contactService.
     this.onModalClose();
     $('#myModal').modal('toggle');
   }
@@ -219,6 +213,6 @@ export class ContactFilterComponent implements OnInit, OnChanges {
   }
 
   deleteContactList() {
-    this.contactService.$deleteContacts.next('');
+    this.contactService.$deleteContactList.next('');
   }
 }
